@@ -28,7 +28,7 @@ class NewTicketNotification extends Notification
     {
         return (new MailMessage)
                     ->line('A new ticket has been created.')
-                    ->action('View Ticket', url('/tickets/'.$this->ticket->id))
-                    ->line('Thank you for using our support system!');
+                    ->action('View Ticket', url('/tickets/'.$this->ticket->id));
+                    // ->line('Thank you for using our support system!');
     }
 }

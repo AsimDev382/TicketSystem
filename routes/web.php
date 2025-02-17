@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 // Route::get('/dashboard', function () {
@@ -35,14 +35,19 @@ Route::get('/dashboard', [DashboardController::class, 'dashboard'])->middleware(
 
 // Routes for authenticated users with the 'admin' role
 Route::middleware(['auth'])->group(function () {
-    Route::resource('tickets', TicketController::class)->only(['index', 'show', 'create', 'destroy']);
+
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/edit-profile', [ProfileController::class, 'EditProfile'])->name('edit.profile');
+    Route::post('/update-profile/{id}', [ProfileController::class, 'UpdateProfile'])->name('update.profile');
+
+
+
+    Route::resource('tickets', TicketController::class);
     Route::post('/tickets/{ticket}/status', [TicketController::class, 'updateStatus'])->name('tickets.updateStatus');
     Route::post('/tickets/{ticket}/assign', [TicketController::class, 'assignToAdmin'])->name('tickets.assignToAdmin');
-// });
 
-// Routes for authenticated users with the 'user' role
-// Route::middleware(['auth', 'role:user'])->group(function () {
-    Route::resource('tickets', TicketController::class)->only(['index', 'show', 'create', 'store']);
     Route::post('/tickets/{ticket}/replies', [ReplyController::class, 'store'])->name('replies.store');
 
     Route::get('/filter-tickets', [TicketController::class, 'filter'])->name('filter.tickets');

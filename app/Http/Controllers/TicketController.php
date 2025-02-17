@@ -102,15 +102,8 @@ class TicketController extends Controller
         $this->authorize('delete', $ticket);
 
         $ticket->delete();
+        return redirect()->back()->with('success', 'Ticket deleted successfully');
     }
-
-    // public function assignToAdmin(Ticket $ticket)
-    // {
-    //     $ticket->user_id = auth()->id();
-    //     $ticket->save();
-
-    //     return back()->with('success', 'Ticket assigned successfully.');
-    // }
 
 
     public function filter(Request $request)

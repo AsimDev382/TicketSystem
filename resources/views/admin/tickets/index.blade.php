@@ -121,10 +121,10 @@
                                         <td>
                                             <a href="{{ route('tickets.show', $ticket->id) }}" class="btn btn-warning">View</a>
                                             @if(auth()->user()->role == 'admin')
-                                            <form action="{{ route('tickets.destroy', $ticket->id) }}" style="display:inline;">
+                                            <form action="{{ route('tickets.destroy', $ticket->id) }}" method="POST" style="display:inline;">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button class="btn btn-danger">Delete</button>
+                                                <button type="submit" class="btn btn-danger">Delete</button>
                                             </form>
                                             @endif
                                         </td>

@@ -58,25 +58,10 @@
                                             <x-text-input id="password" class="form-control block mt-1 w-full" type="password" name="password" tabindex="2" required autocomplete="current-password" />
                                         </div>
                                         <x-input-error :messages="$errors->get('password')" class="mt-2" />
-                                        {{-- <div class="invalid-feedback">
-                            </div> --}}
+
                                     </div>
 
-                                    <!-- Remember Me -->
-                                    {{-- <div class="form-group block mt-4">
-                            <label for="remember_me" class="inline-flex items-center">
-                                <input id="remember_me" type="checkbox" class="custom-control-input" name="remember" tabindex="3" id="remember-me">
-                                <span class="ms-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Remember me') }}</span>
-                                    </label>
-                            </div> --}}
 
-
-                            {{-- <div class="form-group">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" name="remember" class="custom-control-input" tabindex="3" id="remember-me">
-                                <label class="custom-control-label" for="remember-me">Remember Me</label>
-                            </div>
-                        </div> --}}
 
                             <div class="form-group flex items-center justify-end mt-4">
                                 @if (Route::has('password.request'))
@@ -89,25 +74,7 @@
                                     {{ __('Log in') }}
                                 </x-primary-button>
                             </div>
-
-
-                            {{-- <div class="form-group">
-                            <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
-                            Login
-                            </button>
-                        </div> --}}
                             </form>
-                            {{-- <div class="text-center mt-4 mb-3">
-                        <div class="text-job text-muted">Login With Social</div>
-                    </div> --}}
-                            {{-- <div class="row sm-gutters">
-                        <div class="col-6">
-                            <a class="btn btn-block btn-social btn-facebook"><span class="fab fa-facebook"></span> Facebook</a>
-                        </div>
-                        <div class="col-6">
-                            <a class="btn btn-block btn-social btn-twitter"><span class="fab fa-twitter"></span> Twitter</a>
-                        </div>
-                    </div> --}}
                         </div>
                     </div>
                     <div class="mt-0 text-muted text-center">

@@ -215,14 +215,14 @@ $(document).ready(function() {
                         var role = "{{ auth()->user()->role }}";
 
                         if (role === 'admin') {
-                            statusOptions = `<select name="status" class="form-control" style="width: 150px">
+                            statusOptions = `<select name="status" class="form-control" style="width: 100px">
                                                 <option value="Open" ${ticket.status == 'Open' ? 'selected' : ''}>Open</option>
                                                 <option value="In Progress" ${ticket.status == 'In Progress' ? 'selected' : ''}>In Progress</option>
                                                 <option value="Resolved" ${ticket.status == 'Resolved' ? 'selected' : ''}>Resolved</option>
                                                 <option value="Closed" ${ticket.status == 'Closed' ? 'selected' : ''}>Closed</option>
                                             </select>`;
                         } else {
-                            statusOptions = `<select name="status" class="form-control" style="width: 150px">
+                            statusOptions = `<select name="status" class="form-control" style="width: 100px">
                                                 <option value="Open" ${ticket.status == 'Open' ? 'selected' : ''}>Open</option>
                                                 <option value="Closed" ${ticket.status == 'Closed' ? 'selected' : ''}>Closed</option>
                                             </select>`;

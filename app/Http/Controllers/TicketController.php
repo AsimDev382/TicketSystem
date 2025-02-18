@@ -68,6 +68,10 @@ class TicketController extends Controller
         $ticket->user_id = auth()->id();
         $ticket->ticket_id = rand(1000, 99999);
 
+        $latestTicket = Ticket::latest('id')->first();
+        $number = $latestTicket ? ($latestTicket->id + 1) : 1;
+        $ticket->ticket_id = 'TKT-' . str_pad($number, 2, '0', STR_PAD_LEFT);
+
         if ($request->hasFile('attachment')) {
             $ticket->attachment = $request->file('attachment')->store('attachments', 'public');
         }

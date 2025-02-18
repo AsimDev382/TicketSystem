@@ -25,7 +25,7 @@
 
 
     <div class="d-flex">
-        <select name="status" class="form-control w-25" id="status-filter">
+        <select name="status" class="form-control" style="width: 150px;" id="status-filter">
             <option value="">Select Status</option>
             <option value="Open">Open</option>
             <option value="In Progress">In Progress</option>
@@ -33,14 +33,30 @@
             <option value="Closed">Closed</option>
         </select>&nbsp;
 
-        <select name="priority" class="form-control w-25" id="priority-filter">
+        <select name="priority" class="form-control" style="width: 150px;" id="priority-filter">
             <option value="">Select Priority</option>
             <option value="Low">Low</option>
             <option value="Medium">Medium</option>
             <option value="High">High</option>
         </select>&nbsp;
 
-        <input type="date" name="date" class="form-control w-25" id="date-filter">
+
+        <select name="user" class="form-control" style="width: 150px;" id="user-filter">
+            <option value="">Select User</option>
+            @foreach ($users as $user)
+            <option value="{{ $user->id }}">{{ $user->name }}</option>
+            @endforeach
+        </select>&nbsp;
+
+        <select name="ticket_id" class="form-control" style="width: 150px;" id="ticket-filter">
+            <option value="">Select Ticket ID</option>
+            @foreach ($tickets as $ticket)
+            <option value="{{ $ticket->ticket_id }}">{{ $ticket->ticket_id }}</option>
+            <option value="6368">7468</option>
+            @endforeach
+        </select>&nbsp;
+
+        <input type="date" name="date" class="form-control" style="width: 150px;" id="date-filter">
     </div>
 
 
@@ -74,6 +90,7 @@
                                     <tr>
                                         <th class="text-center">#</th>
                                         <th>Title</th>
+                                        {{-- <th>User Name</th> --}}
                                         <th>Status</th>
                                         <th>Role</th>
                                         <th>Date</th>
@@ -85,14 +102,15 @@
                                     @foreach($tickets as $ticket)
                                     <tr>
                                         <td class="text-center">{{ $ticket->id }}</td>
-                                        <td>{{ $ticket->title }}</td>
+                                        {{-- <td>{{ $ticket->title }}</td> --}}
+                                        <td>{{ $ticket->user->name }}</td>
                                         <td>{{ $ticket->priority }}</td>
                                         <td>
                                             @if(auth()->user()->role == 'admin')
                                                 <form method="POST" action="{{ route('tickets.updateStatus', $ticket) }}">
                                                     @csrf
                                                     <div class="d-flex">
-                                                    <select name="status" class="form-control" style="width: 150px">
+                                                    <select name="status" class="form-control" style="width: 100px">
                                                         <option value="Open" {{ $ticket->status == 'Open' ? 'selected' : '' }}>Open</option>
                                                         <option value="In Progress" {{ $ticket->status == 'In Progress' ? 'selected' : '' }}>In Progress</option>
                                                         <option value="Resolved" {{ $ticket->status == 'Resolved' ? 'selected' : '' }}>Resolved</option>
@@ -106,7 +124,7 @@
                                                 <form method="POST" action="{{ route('tickets.updateStatus', $ticket) }}">
                                                     @csrf
                                                     <div class="d-flex">
-                                                    <select name="status" class="form-control" style="width: 150px">
+                                                    <select name="status" class="form-control" style="width: 100px">
                                                         <option value="Open" {{ $ticket->status == 'Open' ? 'selected' : '' }}>Open</option>
                                                         {{-- <option value="In Progress" {{ $ticket->status == 'In Progress' ? 'selected' : '' }}>In Progress</option>
                                                         <option value="Resolved" {{ $ticket->status == 'Resolved' ? 'selected' : '' }}>Resolved</option> --}}
@@ -163,7 +181,7 @@
 <script>
 $(document).ready(function() {
     // Trigger the filter function whenever any of the filters are changed
-    $('#status-filter, #priority-filter, #date-filter').on('change', function() {
+    $('#status-filter, #priority-filter, #date-filter, #user-filter, #ticket-filter').on('change', function() {
         filterTickets();
     });
 
@@ -172,6 +190,9 @@ $(document).ready(function() {
         var status = $('#status-filter').val();
         var priority = $('#priority-filter').val();
         var date = $('#date-filter').val();
+        var user = $('#user-filter').val();
+        var ticket_id = $('#ticket-filter').val();
+        console.log(ticket_id);
 
         // Make AJAX request to server to filter tickets
         $.ajax({
@@ -180,7 +201,9 @@ $(document).ready(function() {
             data: {
                 status: status,
                 priority: priority,
-                date: date
+                date: date,
+                user: user,
+                ticket_id: ticket_id
             },
             success: function(response) {
                 // Clear the current ticket list

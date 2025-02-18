@@ -3,26 +3,32 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TicketRequest;
+// use App\Http\Resources\User;
 use App\Jobs\SendNewTicketNotificationJob;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Notifications\NewTicketNotification;
 use Illuminate\Support\Facades\Gate;
+use App\Models\User;
 
 class TicketController extends Controller
 {
     public function index()
     {
+        $users = User::all();
+
         if (auth()->user()->role == 'admin') {
             // Admins see all tickets
             $tickets = Ticket::all();
+            // $tickets = Ticket::with('user')->get();
         } else {
             // Users see only their own tickets
             $tickets = Ticket::where('user_id', auth()->id())->get();
+            // $tickets = Ticket::with('user')->where('user_id', auth()->id())->get();
         }
 
-        return view('admin.tickets.index', compact('tickets'));
+        return view('admin.tickets.index', compact('tickets', 'users'));
     }
 
     public function create()
@@ -60,6 +66,7 @@ class TicketController extends Controller
         $ticket->description = $request->description;
         $ticket->priority = $request->priority;
         $ticket->user_id = auth()->id();
+        $ticket->ticket_id = rand(1000, 99999);
 
         if ($request->hasFile('attachment')) {
             $ticket->attachment = $request->file('attachment')->store('attachments', 'public');
@@ -112,11 +119,14 @@ class TicketController extends Controller
         $status = $request->get('status');
         $priority = $request->get('priority');
         $date = $request->get('date');
+        $user = $request->get('user');
+        $ticket_id = $request->get('ticket_id');
 
         $role = auth()->user()->role;
         $user_id = auth()->user()->id;
         // Query to filter tickets
         $query = Ticket::query();
+        // $query = Ticket::with('user');
 
         if ($role == 'admin') {
 
@@ -131,6 +141,12 @@ class TicketController extends Controller
             if ($date) {
                 $query->whereDate('created_at', $date);
             }
+            if ($user) {
+                $query->where('user_id', $user);
+            }
+            if ($ticket_id) {
+                $query->where('ticket_id', $ticket_id);
+            }
         } else {
             if ($status) {
                 $query->where('status', $status)->where('user_id', $user_id);
@@ -142,6 +158,12 @@ class TicketController extends Controller
 
             if ($date) {
                 $query->whereDate('created_at', $date)->where('user_id', $user_id);
+            }
+            if ($user) {
+                $query->where('user_id', $user);
+            }
+            if ($ticket_id) {
+                $query->where('ticket_id', $ticket_id);
             }
         }
         $tickets = $query->get();

@@ -247,6 +247,7 @@
                         // Clear the textarea
                         $('#message').val('');
                     }
+
                 }
                 , error: function(xhr) {
                     // Hide loading overlay

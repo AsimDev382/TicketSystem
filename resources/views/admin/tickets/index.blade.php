@@ -52,7 +52,6 @@
             <option value="">Select Ticket ID</option>
             @foreach ($tickets as $ticket)
             <option value="{{ $ticket->ticket_id }}">{{ $ticket->ticket_id }}</option>
-            <option value="6368">7468</option>
             @endforeach
         </select>&nbsp;
 
@@ -102,8 +101,8 @@
                                     @foreach($tickets as $ticket)
                                     <tr>
                                         <td class="text-center">{{ $ticket->id }}</td>
-                                        {{-- <td>{{ $ticket->title }}</td> --}}
-                                        <td>{{ $ticket->user->name }}</td>
+                                        <td>{{ $ticket->title }}</td>
+                                        {{-- <td>{{ $ticket->user->name }}</td> --}}
                                         <td>{{ $ticket->priority }}</td>
                                         <td>
                                             @if(auth()->user()->role == 'admin')

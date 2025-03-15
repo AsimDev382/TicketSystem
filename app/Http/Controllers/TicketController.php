@@ -79,7 +79,7 @@ class TicketController extends Controller
         $ticket->save();
 
         // Auth::user()->notify(new NewTicketNotification($ticket));
-        SendNewTicketNotificationJob::dispatch($ticket);
+        // SendNewTicketNotificationJob::dispatch($ticket);
 
         session()->flash('success', 'Ticket created successfully!');
 

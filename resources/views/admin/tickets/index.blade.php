@@ -1,5 +1,4 @@
 @extends('admin.layouts.adminlayout')
-
 @section('style')
 <style>
 #tickets-list {
@@ -64,10 +63,19 @@
         <div class="row">
 
             @if(session('success'))
-                <div class="alert alert-success w-100">
+                {{-- <div class="alert alert-success w-100">
                     {{ session('success') }}
-                </div>
+                </div> --}}
+                <x-alert type="success" dismissible message="{{ session('success') }}"/>
+
+               {{-- show html code --}}
+               {{-- <x-alert>
+                <span class="alert heading">{{ session('success') }}</span>
+               </x-alert> --}}
+
             @endif
+
+
             <!-- Add this div to show the success message -->
             <div id="success-message" class="alert alert-success w-100" style="display: none;"></div>
 
@@ -134,7 +142,8 @@
                                                 </form>
                                             @endif
                                         </td>
-                                        <td>{{ $ticket->created_at->format('d-m-Y') }}</td>
+                                        {{-- <td>{{ $ticket->created_at->format('d-m-Y') }}</td> --}}
+                                        <td>{{ $ticket->created_at }}</td>
                                         <td>
                                             <a href="{{ route('tickets.show', $ticket->id) }}" class="btn btn-warning">View</a>
                                             @if(auth()->user()->role == 'admin')

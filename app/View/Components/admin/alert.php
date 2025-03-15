@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components;
+namespace App\View\Components\admin;
 
 use Closure;
 use Illuminate\Contracts\View\View;
@@ -8,17 +8,12 @@ use Illuminate\View\Component;
 
 class alert extends Component
 {
-    public $type;
-    public $message;
-    public $dismissible;
     /**
      * Create a new component instance.
      */
-    public function __construct($type, $message, $dismissible = false)
+    public function __construct()
     {
-        $this->type = $type;
-        $this->message = $message;
-        $this->dismissible = $dismissible;
+        //
     }
 
     /**
@@ -26,6 +21,6 @@ class alert extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('admin.component.alert');
+        return view('components.admin.alert');
     }
 }

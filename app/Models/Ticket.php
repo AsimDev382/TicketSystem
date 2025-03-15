@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,5 +18,12 @@ class Ticket extends Model
     public function replies()
     {
         return $this->hasMany(Reply::class);
+    }
+
+    public function setTitleAttribute($value){
+        $this->attributes["title"] = ucwords($value);
+    }
+    public function getCreatedAtAttribute($value){
+        return date('d-m-Y', strtotime($value));
     }
 }
